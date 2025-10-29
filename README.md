@@ -99,7 +99,7 @@ poetry run python -m src.cli workflows --domain healthcare --count 3
   - Generates realistic workflows as JSON files
 
 For detailed CLI documentation, see [CLI_GUIDE.md](CLI_GUIDE.md).
-For visualization documentation, see [docs/VISUALIZATION_GUIDE.md](docs/VISUALIZATION_GUIDE.md).
+For visualization documentation, see [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md).
 
 #### Examples
 
