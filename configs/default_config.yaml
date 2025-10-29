@@ -1,0 +1,29 @@
+# Default benchmark configuration
+
+benchmark:
+  name: "default_workflow_benchmark"
+  num_iterations: 10
+  timeout: 300  # seconds
+
+workflow:
+  type: "dag"  # Options: dag, linear, fork_join
+  num_nodes: 20
+  edge_probability: 0.3
+
+algorithms:
+  - name: "baseline"
+    config:
+      param1: 10
+      param2: 0.5
+
+evaluation:
+  metrics:
+    - makespan
+    - resource_utilization
+    - cost
+  output_dir: "results/"
+  save_plots: true
+
+logging:
+  level: "INFO"
+  file: "benchmark.log"
