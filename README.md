@@ -128,9 +128,3 @@ poetry run python -m src.cli report --results-file results/benchmark_results_202
 ```bash
 poetry run pytest
 ```
-
-### Running with Coverage
-
-```bash
-poetry run pytest --cov=src
-```
