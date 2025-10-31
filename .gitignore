@@ -73,3 +73,7 @@ Thumbs.db
 results/
 docs/
 scripts/
+DEPLOYMENT.md
+
+
+tests/
