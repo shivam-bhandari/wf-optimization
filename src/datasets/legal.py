@@ -184,7 +184,7 @@ class LegalWorkflowGenerator:
             else 0,
         }
 
-    def generate_contract_review(self, num_tasks: int) -> nx.DiGraph:
+    def generate_contract_review(self) -> nx.DiGraph:
         """
         Generate a contract review workflow with multi-tier attorney review.
 
@@ -244,9 +244,6 @@ class LegalWorkflowGenerator:
             - Junior associate review: 100% (always required)
             - Senior attorney review: 30% (complex/high-risk contracts)
             - Partner approval: 10% (highest-risk matters requiring partner sign-off)
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the contract review workflow
@@ -447,7 +444,7 @@ class LegalWorkflowGenerator:
 
         return graph
 
-    def generate_compliance_check(self, num_tasks: int) -> nx.DiGraph:
+    def generate_compliance_check(self) -> nx.DiGraph:
         """
         Generate a compliance checking workflow.
 
@@ -491,9 +488,6 @@ class LegalWorkflowGenerator:
 
         Conditional Branch:
             - Legal counsel review: 20% (complex regulations or gaps identified)
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the compliance checking workflow
@@ -644,7 +638,7 @@ class LegalWorkflowGenerator:
 
         return graph
 
-    def generate_document_redlining(self, num_tasks: int) -> nx.DiGraph:
+    def generate_document_redlining(self) -> nx.DiGraph:
         """
         Generate a document redlining workflow.
 
@@ -685,9 +679,6 @@ class LegalWorkflowGenerator:
 
         Conditional Branch:
             - Attorney review changes: 100% (always required for all redlines)
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the document redlining workflow

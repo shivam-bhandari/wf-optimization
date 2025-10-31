@@ -130,9 +130,9 @@ def main():
     print_banner("Generated Healthcare Workflows")
     
     workflows = {
-        "Medical Record Extraction": gen.generate_medical_record_extraction(10),
-        "Insurance Claim Processing": gen.generate_insurance_claim_processing(11),
-        "Patient Intake Workflow": gen.generate_patient_intake_workflow(8),
+        "Medical Record Extraction": gen.generate_medical_record_extraction(),
+        "Insurance Claim Processing": gen.generate_insurance_claim_processing(),
+        "Patient Intake Workflow": gen.generate_patient_intake_workflow(),
     }
     
     # Visualize each workflow

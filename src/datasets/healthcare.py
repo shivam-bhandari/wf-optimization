@@ -161,7 +161,7 @@ class HealthcareWorkflowGenerator:
             else 0,
         }
 
-    def generate_medical_record_extraction(self, num_tasks: int) -> nx.DiGraph:
+    def generate_medical_record_extraction(self) -> nx.DiGraph:
         """
         Generate a medical record extraction workflow.
 
@@ -183,9 +183,6 @@ class HealthcareWorkflowGenerator:
 
         Conditional Branch:
             - After OCR processing, 15% chance of manual review (60-120 seconds)
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the medical record extraction workflow
@@ -314,7 +311,7 @@ class HealthcareWorkflowGenerator:
 
         return graph
 
-    def generate_insurance_claim_processing(self, num_tasks: int) -> nx.DiGraph:
+    def generate_insurance_claim_processing(self) -> nx.DiGraph:
         """
         Generate an insurance claim processing workflow.
 
@@ -337,9 +334,6 @@ class HealthcareWorkflowGenerator:
 
         Conditional Branch:
             - After fraud detection, 10% chance of fraud investigation (2-4 minutes)
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the insurance claim processing workflow
@@ -475,7 +469,7 @@ class HealthcareWorkflowGenerator:
 
         return graph
 
-    def generate_patient_intake_workflow(self, num_tasks: int) -> nx.DiGraph:
+    def generate_patient_intake_workflow(self) -> nx.DiGraph:
         """
         Generate a patient intake workflow.
 
@@ -492,9 +486,6 @@ class HealthcareWorkflowGenerator:
             6. Pre-visit questionnaire
             7. Record retrieval
             8. Provider assignment
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the patient intake workflow

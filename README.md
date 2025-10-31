@@ -2,35 +2,36 @@
 
 A comprehensive benchmark suite for evaluating workflow optimization algorithms.
 
-## Project Structure
+---
 
-```
-├── src/
-│   ├── benchmarking/  # Core benchmarking code
-│   ├── algorithms/    # Optimization algorithm implementations
-│   ├── datasets/      # Workflow generation
-│   ├── evaluation/    # Metrics and analysis
-│   ├── reporting/     # Reports
-│   └── cli.py         # Command-line interface
-├── tests/             # Unit tests
-├── configs/           # Benchmark configurations
-├── docs/              # Documentation
-├── examples/          # Example scripts
-├── results/           # Benchmark output data
-└── workflows/         # Generated workflow files
+## 🚀 Live Demo
+- **See it live:** [https://username.github.io/workflow-benchmark](https://username.github.io/workflow-benchmark)
+- Direct link to our interactive dashboard comparing algorithm performance, charts, and expert recommendations.
+- <img src="web/images/dashboard_screenshot.png" alt="Dashboard Screenshot" width="600" height="auto" style="box-shadow:0 2px 12px #2563eb28; margin:1em 0;"/>
+- The dashboard is automatically updated whenever changes are pushed to `main`.
 
-```
+---
+
+## Deployment
+- For full, step-by-step deployment, see [DEPLOYMENT.md](DEPLOYMENT.md)
+- **Automatic deployments**: Any push to main triggers a GitHub Actions workflow to re-run benchmarks, prepare artifacts, and update GitHub Pages.
+- Manual and advanced options also documented.
+
+---
+
+## Screenshots
+
+| Dashboard          | Charts Gallery                 | Algorithm Compare Tool      |
+|--------------------|-------------------------------|----------------------------|
+| ![dashboard](web/images/dashboard_screenshot.png) | ![charts](web/images/charts_gallery_screenshot.png) | ![compare](web/images/compare_tool_screenshot.png) |
+
+> Replace placeholder PNGs in `web/images/` with sample screenshots of your interface for best effect.
+
+---
 
 ## Installation
 
 This project uses [Poetry](https://python-poetry.org/) for dependency management.
-
-### Install Poetry
-
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
-
 ### Install Dependencies
 
 ```bash

@@ -1,0 +1,1323 @@
+{
+  "metadata": {
+    "generated_at": "2025-10-30T12:55:01",
+    "total_benchmarks": 24,
+    "success_rate": 100.0,
+    "algorithms_tested": [
+      "astar_optimizer",
+      "bellman_ford_optimizer",
+      "dag_dynamic_programming",
+      "dijkstra_optimizer"
+    ],
+    "workflows_tested": 3,
+    "domains": [
+      "finance",
+      "healthcare",
+      "legal"
+    ]
+  },
+  "summary": {
+    "best_algorithm": "astar_optimizer",
+    "best_avg_time": 0.0002,
+    "all_optimal": true,
+    "recommendation": "Use A* for production (1.0\u00d7 faster than alternatives)"
+  },
+  "algorithms": [
+    {
+      "name": "astar_optimizer",
+      "display_name": "A*",
+      "avg_execution_time": 0.0002,
+      "avg_cost": 14.33,
+      "avg_nodes_explored": 15.33,
+      "success_rate": 100.0,
+      "total_runs": 6,
+      "std_execution_time": 5e-05
+    },
+    {
+      "name": "bellman_ford_optimizer",
+      "display_name": "Bellman Ford",
+      "avg_execution_time": 0.0002,
+      "avg_cost": 14.33,
+      "avg_nodes_explored": 15.33,
+      "success_rate": 100.0,
+      "total_runs": 6,
+      "std_execution_time": 7e-05
+    },
+    {
+      "name": "dag_dynamic_programming",
+      "display_name": "Dag-Dp",
+      "avg_execution_time": 0.4705,
+      "avg_cost": 14.33,
+      "avg_nodes_explored": 15.33,
+      "success_rate": 100.0,
+      "total_runs": 6,
+      "std_execution_time": 0.02297
+    },
+    {
+      "name": "dijkstra_optimizer",
+      "display_name": "Dijkstra",
+      "avg_execution_time": 0.0005,
+      "avg_cost": 14.33,
+      "avg_nodes_explored": 15.33,
+      "success_rate": 100.0,
+      "total_runs": 6,
+      "std_execution_time": 7e-05
+    }
+  ],
+  "results_by_workflow": [
+    {
+      "workflow_id": "finance_loan_approval",
+      "domain": "finance",
+      "workflow_type": "loan_approval",
+      "nodes": 16,
+      "results": [
+        {
+          "algorithm": "astar_optimizer",
+          "avg_time": 0.00023,
+          "avg_cost": 15.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "bellman_ford_optimizer",
+          "avg_time": 0.0002,
+          "avg_cost": 15.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "dag_dynamic_programming",
+          "avg_time": 0.45198,
+          "avg_cost": 15.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "dijkstra_optimizer",
+          "avg_time": 0.00054,
+          "avg_cost": 15.0,
+          "trials": 2
+        }
+      ]
+    },
+    {
+      "workflow_id": "healthcare_medical_record_extraction",
+      "domain": "healthcare",
+      "workflow_type": "medical_record_extraction",
+      "nodes": 12,
+      "results": [
+        {
+          "algorithm": "astar_optimizer",
+          "avg_time": 0.00016,
+          "avg_cost": 11.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "bellman_ford_optimizer",
+          "avg_time": 0.00027,
+          "avg_cost": 11.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "dag_dynamic_programming",
+          "avg_time": 0.4797,
+          "avg_cost": 11.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "dijkstra_optimizer",
+          "avg_time": 0.00044,
+          "avg_cost": 11.0,
+          "trials": 2
+        }
+      ]
+    },
+    {
+      "workflow_id": "legal_contract_review",
+      "domain": "legal",
+      "workflow_type": "contract_review",
+      "nodes": 18,
+      "results": [
+        {
+          "algorithm": "astar_optimizer",
+          "avg_time": 0.00015,
+          "avg_cost": 17.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "bellman_ford_optimizer",
+          "avg_time": 0.00019,
+          "avg_cost": 17.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "dag_dynamic_programming",
+          "avg_time": 0.47968,
+          "avg_cost": 17.0,
+          "trials": 2
+        },
+        {
+          "algorithm": "dijkstra_optimizer",
+          "avg_time": 0.00049,
+          "avg_cost": 17.0,
+          "trials": 2
+        }
+      ]
+    }
+  ],
+  "visualizations": [
+    {
+      "filename": "algorithm_comparison_time.png",
+      "title": "Execution Time Comparison",
+      "description": "Average execution time across all workflows"
+    },
+    {
+      "filename": "algorithm_comparison_cost.png",
+      "title": "Solution Cost Comparison",
+      "description": "Total cost of solutions found by each algorithm"
+    },
+    {
+      "filename": "scalability.png",
+      "title": "Scalability Analysis",
+      "description": "Performance across different workflow sizes"
+    },
+    {
+      "filename": "cost_comparison.png",
+      "title": "Cost by Domain",
+      "description": "Cost comparison across Healthcare, Finance, and Legal domains"
+    }
+  ],
+  "workflows": [
+    {
+      "workflow_id": "demo_etl_sample",
+      "domain": "demo",
+      "type": "extract_transform_load",
+      "nodes": [
+        {
+          "id": "start",
+          "label": "Start",
+          "task_type": "start",
+          "execution_time_ms": 0,
+          "cost_units": 0,
+          "is_start": true,
+          "is_end": false,
+          "resource_requirements": {}
+        },
+        {
+          "id": "extract",
+          "label": "Extract",
+          "task_type": "extract",
+          "execution_time_ms": 500,
+          "cost_units": 0.12,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2
+          }
+        },
+        {
+          "id": "validate",
+          "label": "Validate",
+          "task_type": "validate",
+          "execution_time_ms": 700,
+          "cost_units": 0.21,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 2
+          }
+        },
+        {
+          "id": "map",
+          "label": "Map",
+          "task_type": "transform",
+          "execution_time_ms": 900,
+          "cost_units": 0.35,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 1
+          }
+        },
+        {
+          "id": "upload",
+          "label": "Upload",
+          "task_type": "output",
+          "execution_time_ms": 600,
+          "cost_units": 0.16,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1
+          }
+        },
+        {
+          "id": "end",
+          "label": "End",
+          "task_type": "end",
+          "execution_time_ms": 0,
+          "cost_units": 0,
+          "is_start": false,
+          "is_end": true,
+          "resource_requirements": {}
+        }
+      ],
+      "edges": [
+        {
+          "from": "start",
+          "to": "extract",
+          "transition_cost": 0.05,
+          "data_transfer_time_ms": 50,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "extract",
+          "to": "validate",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 100,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "validate",
+          "to": "map",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 70,
+          "label": "",
+          "dashed": true
+        },
+        {
+          "from": "map",
+          "to": "upload",
+          "transition_cost": 0.13,
+          "data_transfer_time_ms": 120,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "upload",
+          "to": "end",
+          "transition_cost": 0.08,
+          "data_transfer_time_ms": 30,
+          "label": "",
+          "dashed": false
+        }
+      ],
+      "metadata": {
+        "total_nodes": 6,
+        "total_edges": 5,
+        "estimated_total_cost": 0.84,
+        "estimated_total_time_ms": 2700
+      }
+    },
+    {
+      "workflow_id": "healthcare_medical_record_extraction",
+      "domain": "healthcare",
+      "type": "medical_record_extraction",
+      "nodes": [
+        {
+          "id": "start",
+          "label": "Start",
+          "task_type": "start",
+          "execution_time_ms": 0,
+          "cost_units": 0.0,
+          "is_start": true,
+          "is_end": false,
+          "resource_requirements": {}
+        },
+        {
+          "id": "end",
+          "label": "End",
+          "task_type": "end",
+          "execution_time_ms": 0,
+          "cost_units": 0.0,
+          "is_start": false,
+          "is_end": true,
+          "resource_requirements": {}
+        },
+        {
+          "id": "document_ingestion",
+          "label": "Document Ingestion",
+          "task_type": "document_ingestion",
+          "execution_time_ms": 989,
+          "cost_units": 0.19,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "pdf_parsing",
+          "label": "Pdf Parsing",
+          "task_type": "pdf_parsing",
+          "execution_time_ms": 1293,
+          "cost_units": 0.26,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "ocr_processing",
+          "label": "Ocr Processing",
+          "task_type": "ocr_processing",
+          "execution_time_ms": 4743,
+          "cost_units": 0.93,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 8,
+            "memory_gb": 16,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "text_extraction",
+          "label": "Text Extraction",
+          "task_type": "text_extraction",
+          "execution_time_ms": 1017,
+          "cost_units": 0.29,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "entity_extraction",
+          "label": "Entity Extraction",
+          "task_type": "entity_extraction",
+          "execution_time_ms": 1824,
+          "cost_units": 0.8,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "icd_code_mapping",
+          "label": "Icd Code Mapping",
+          "task_type": "icd_code_mapping",
+          "execution_time_ms": 2322,
+          "cost_units": 0.62,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 6,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "data_validation",
+          "label": "Data Validation",
+          "task_type": "data_validation",
+          "execution_time_ms": 1472,
+          "cost_units": 0.21,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "quality_check",
+          "label": "Quality Check",
+          "task_type": "quality_check",
+          "execution_time_ms": 1114,
+          "cost_units": 0.23,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "database_storage",
+          "label": "Database Storage",
+          "task_type": "database_storage",
+          "execution_time_ms": 314,
+          "cost_units": 0.14,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "audit_logging",
+          "label": "Audit Logging",
+          "task_type": "audit_logging",
+          "execution_time_ms": 297,
+          "cost_units": 0.07,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "start",
+          "to": "document_ingestion",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 33,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "document_ingestion",
+          "to": "pdf_parsing",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 135,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "pdf_parsing",
+          "to": "ocr_processing",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 505,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "ocr_processing",
+          "to": "text_extraction",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 317,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "text_extraction",
+          "to": "entity_extraction",
+          "transition_cost": 0.15,
+          "data_transfer_time_ms": 141,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "entity_extraction",
+          "to": "icd_code_mapping",
+          "transition_cost": 0.09,
+          "data_transfer_time_ms": 51,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "icd_code_mapping",
+          "to": "data_validation",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 69,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "data_validation",
+          "to": "quality_check",
+          "transition_cost": 0.11,
+          "data_transfer_time_ms": 68,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "quality_check",
+          "to": "database_storage",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 94,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "database_storage",
+          "to": "audit_logging",
+          "transition_cost": 0.15,
+          "data_transfer_time_ms": 17,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "audit_logging",
+          "to": "end",
+          "transition_cost": 0.12,
+          "data_transfer_time_ms": 11,
+          "label": "",
+          "dashed": false
+        }
+      ],
+      "metadata": {
+        "total_nodes": 12,
+        "total_edges": 11,
+        "estimated_total_cost": 3.74,
+        "estimated_total_time_ms": 15385.0
+      }
+    },
+    {
+      "workflow_id": "finance_loan_approval",
+      "domain": "finance",
+      "type": "loan_approval",
+      "nodes": [
+        {
+          "id": "start",
+          "label": "Start",
+          "task_type": "start",
+          "execution_time_ms": 0,
+          "cost_units": 0.0,
+          "is_start": true,
+          "is_end": false,
+          "resource_requirements": {}
+        },
+        {
+          "id": "end",
+          "label": "End",
+          "task_type": "end",
+          "execution_time_ms": 0,
+          "cost_units": 0.0,
+          "is_start": false,
+          "is_end": true,
+          "resource_requirements": {}
+        },
+        {
+          "id": "application_intake",
+          "label": "Application Intake",
+          "task_type": "application_intake",
+          "execution_time_ms": 328,
+          "cost_units": 0.05,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "identity_verification",
+          "label": "Identity Verification",
+          "task_type": "identity_verification",
+          "execution_time_ms": 1673,
+          "cost_units": 1.74,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "credit_score_retrieval",
+          "label": "Credit Score Retrieval",
+          "task_type": "credit_score_retrieval",
+          "execution_time_ms": 1315,
+          "cost_units": 0.98,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "credit_report_analysis",
+          "label": "Credit Report Analysis",
+          "task_type": "credit_report_analysis",
+          "execution_time_ms": 1873,
+          "cost_units": 0.79,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "income_verification",
+          "label": "Income Verification",
+          "task_type": "income_verification",
+          "execution_time_ms": 2382,
+          "cost_units": 1.64,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "employment_verification",
+          "label": "Employment Verification",
+          "task_type": "employment_verification",
+          "execution_time_ms": 3042,
+          "cost_units": 2.45,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "debt_to_income_calculation",
+          "label": "Debt To Income Calculation",
+          "task_type": "debt_to_income_calculation",
+          "execution_time_ms": 427,
+          "cost_units": 0.08,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "asset_verification",
+          "label": "Asset Verification",
+          "task_type": "asset_verification",
+          "execution_time_ms": 1856,
+          "cost_units": 1.05,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "risk_scoring_model",
+          "label": "Risk Scoring Model",
+          "task_type": "risk_scoring_model",
+          "execution_time_ms": 3859,
+          "cost_units": 0.69,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 8,
+            "memory_gb": 16,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "fraud_detection",
+          "label": "Fraud Detection",
+          "task_type": "fraud_detection",
+          "execution_time_ms": 3576,
+          "cost_units": 1.41,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 12,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "automated_underwriting",
+          "label": "Automated Underwriting",
+          "task_type": "automated_underwriting",
+          "execution_time_ms": 1236,
+          "cost_units": 0.31,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "approval_decision",
+          "label": "Approval Decision",
+          "task_type": "approval_decision",
+          "execution_time_ms": 569,
+          "cost_units": 0.15,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "offer_generation",
+          "label": "Offer Generation",
+          "task_type": "offer_generation",
+          "execution_time_ms": 1326,
+          "cost_units": 0.25,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "notification_dispatch",
+          "label": "Notification Dispatch",
+          "task_type": "notification_dispatch",
+          "execution_time_ms": 314,
+          "cost_units": 0.09,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "start",
+          "to": "application_intake",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 25,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "application_intake",
+          "to": "identity_verification",
+          "transition_cost": 0.13,
+          "data_transfer_time_ms": 42,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "identity_verification",
+          "to": "credit_score_retrieval",
+          "transition_cost": 0.15,
+          "data_transfer_time_ms": 43,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "credit_score_retrieval",
+          "to": "credit_report_analysis",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 188,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "credit_report_analysis",
+          "to": "income_verification",
+          "transition_cost": 0.12,
+          "data_transfer_time_ms": 76,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "income_verification",
+          "to": "employment_verification",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 59,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "employment_verification",
+          "to": "debt_to_income_calculation",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 40,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "debt_to_income_calculation",
+          "to": "asset_verification",
+          "transition_cost": 0.13,
+          "data_transfer_time_ms": 42,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "asset_verification",
+          "to": "risk_scoring_model",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 279,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "risk_scoring_model",
+          "to": "fraud_detection",
+          "transition_cost": 0.11,
+          "data_transfer_time_ms": 284,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "fraud_detection",
+          "to": "automated_underwriting",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 158,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "automated_underwriting",
+          "to": "approval_decision",
+          "transition_cost": 0.08,
+          "data_transfer_time_ms": 119,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "approval_decision",
+          "to": "offer_generation",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 112,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "offer_generation",
+          "to": "notification_dispatch",
+          "transition_cost": 0.08,
+          "data_transfer_time_ms": 70,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "notification_dispatch",
+          "to": "end",
+          "transition_cost": 0.08,
+          "data_transfer_time_ms": 29,
+          "label": "",
+          "dashed": false
+        }
+      ],
+      "metadata": {
+        "total_nodes": 16,
+        "total_edges": 15,
+        "estimated_total_cost": 11.68,
+        "estimated_total_time_ms": 23776.0
+      }
+    },
+    {
+      "workflow_id": "legal_contract_review",
+      "domain": "legal",
+      "type": "contract_review",
+      "nodes": [
+        {
+          "id": "start",
+          "label": "Start",
+          "task_type": "start",
+          "execution_time_ms": 0,
+          "cost_units": 0.0,
+          "is_start": true,
+          "is_end": false,
+          "resource_requirements": {}
+        },
+        {
+          "id": "end",
+          "label": "End",
+          "task_type": "end",
+          "execution_time_ms": 0,
+          "cost_units": 0.0,
+          "is_start": false,
+          "is_end": true,
+          "resource_requirements": {}
+        },
+        {
+          "id": "document_upload",
+          "label": "Document Upload",
+          "task_type": "document_upload",
+          "execution_time_ms": 428,
+          "cost_units": 0.1,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "metadata_extraction",
+          "label": "Metadata Extraction",
+          "task_type": "metadata_extraction",
+          "execution_time_ms": 773,
+          "cost_units": 0.22,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "pdf_parsing",
+          "label": "Pdf Parsing",
+          "task_type": "pdf_parsing",
+          "execution_time_ms": 2131,
+          "cost_units": 0.35,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "document_classification",
+          "label": "Document Classification",
+          "task_type": "document_classification",
+          "execution_time_ms": 1236,
+          "cost_units": 0.63,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "clause_extraction",
+          "label": "Clause Extraction",
+          "task_type": "clause_extraction",
+          "execution_time_ms": 4764,
+          "cost_units": 1.25,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 12,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "key_term_identification",
+          "label": "Key Term Identification",
+          "task_type": "key_term_identification",
+          "execution_time_ms": 3761,
+          "cost_units": 1.2,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "risk_clause_detection",
+          "label": "Risk Clause Detection",
+          "task_type": "risk_clause_detection",
+          "execution_time_ms": 4728,
+          "cost_units": 1.94,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 12,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "obligation_extraction",
+          "label": "Obligation Extraction",
+          "task_type": "obligation_extraction",
+          "execution_time_ms": 3845,
+          "cost_units": 0.73,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "liability_analysis",
+          "label": "Liability Analysis",
+          "task_type": "liability_analysis",
+          "execution_time_ms": 2752,
+          "cost_units": 1.16,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 6,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "compliance_validation",
+          "label": "Compliance Validation",
+          "task_type": "compliance_validation",
+          "execution_time_ms": 4235,
+          "cost_units": 1.89,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "jurisdiction_check",
+          "label": "Jurisdiction Check",
+          "task_type": "jurisdiction_check",
+          "execution_time_ms": 1573,
+          "cost_units": 0.35,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "precedent_comparison",
+          "label": "Precedent Comparison",
+          "task_type": "precedent_comparison",
+          "execution_time_ms": 3723,
+          "cost_units": 1.62,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 12,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "automated_risk_scoring",
+          "label": "Automated Risk Scoring",
+          "task_type": "automated_risk_scoring",
+          "execution_time_ms": 2544,
+          "cost_units": 0.68,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 4,
+            "memory_gb": 8,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "redlining_generation",
+          "label": "Redlining Generation",
+          "task_type": "redlining_generation",
+          "execution_time_ms": 1573,
+          "cost_units": 0.47,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 2,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "final_approval",
+          "label": "Final Approval",
+          "task_type": "final_approval",
+          "execution_time_ms": 907,
+          "cost_units": 0.28,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 2,
+            "storage_gb": 10
+          }
+        },
+        {
+          "id": "junior_associate_review",
+          "label": "Junior Associate Review",
+          "task_type": "junior_associate_review",
+          "execution_time_ms": 199507,
+          "cost_units": 97.87,
+          "is_start": false,
+          "is_end": false,
+          "resource_requirements": {
+            "cpu_cores": 1,
+            "memory_gb": 4,
+            "storage_gb": 10
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "start",
+          "to": "document_upload",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 43,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "document_upload",
+          "to": "metadata_extraction",
+          "transition_cost": 0.11,
+          "data_transfer_time_ms": 68,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "metadata_extraction",
+          "to": "pdf_parsing",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 141,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "pdf_parsing",
+          "to": "document_classification",
+          "transition_cost": 0.15,
+          "data_transfer_time_ms": 224,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "document_classification",
+          "to": "clause_extraction",
+          "transition_cost": 0.12,
+          "data_transfer_time_ms": 346,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "clause_extraction",
+          "to": "key_term_identification",
+          "transition_cost": 0.07,
+          "data_transfer_time_ms": 155,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "key_term_identification",
+          "to": "risk_clause_detection",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 182,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "risk_clause_detection",
+          "to": "obligation_extraction",
+          "transition_cost": 0.13,
+          "data_transfer_time_ms": 174,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "obligation_extraction",
+          "to": "liability_analysis",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 168,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "liability_analysis",
+          "to": "compliance_validation",
+          "transition_cost": 0.09,
+          "data_transfer_time_ms": 171,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "compliance_validation",
+          "to": "jurisdiction_check",
+          "transition_cost": 0.11,
+          "data_transfer_time_ms": 95,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "jurisdiction_check",
+          "to": "precedent_comparison",
+          "transition_cost": 0.12,
+          "data_transfer_time_ms": 288,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "precedent_comparison",
+          "to": "automated_risk_scoring",
+          "transition_cost": 0.13,
+          "data_transfer_time_ms": 293,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "automated_risk_scoring",
+          "to": "redlining_generation",
+          "transition_cost": 0.14,
+          "data_transfer_time_ms": 200,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "redlining_generation",
+          "to": "final_approval",
+          "transition_cost": 0.13,
+          "data_transfer_time_ms": 146,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "final_approval",
+          "to": "junior_associate_review",
+          "transition_cost": 0.1,
+          "data_transfer_time_ms": 254,
+          "label": "",
+          "dashed": false
+        },
+        {
+          "from": "junior_associate_review",
+          "to": "end",
+          "transition_cost": 0.11,
+          "data_transfer_time_ms": 40,
+          "label": "",
+          "dashed": false
+        }
+      ],
+      "metadata": {
+        "total_nodes": 18,
+        "total_edges": 17,
+        "estimated_total_cost": 110.74000000000001,
+        "estimated_total_time_ms": 238480.0
+      }
+    }
+  ]
+}

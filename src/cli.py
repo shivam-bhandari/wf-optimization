@@ -246,23 +246,23 @@ def run(ctx, algorithms, domains, trials, timeout, output_dir):
             # Generate one workflow of each type for this domain
             for workflow_type in WORKFLOW_TYPES[domain_key]:
                 if workflow_type == "medical_record_extraction":
-                    graph = generator.generate_medical_record_extraction(num_tasks=10)
+                    graph = generator.generate_medical_record_extraction()
                 elif workflow_type == "insurance_claim_processing":
-                    graph = generator.generate_insurance_claim_processing(num_tasks=10)
+                    graph = generator.generate_insurance_claim_processing()
                 elif workflow_type == "patient_intake":
-                    graph = generator.generate_patient_intake_workflow(num_tasks=10)
+                    graph = generator.generate_patient_intake_workflow()
                 elif workflow_type == "loan_approval":
-                    graph = generator.generate_loan_approval(num_tasks=10)
+                    graph = generator.generate_loan_approval()
                 elif workflow_type == "fraud_detection":
-                    graph = generator.generate_fraud_detection(num_tasks=10)
+                    graph = generator.generate_fraud_detection()
                 elif workflow_type == "risk_assessment":
-                    graph = generator.generate_risk_assessment(num_tasks=10)
+                    graph = generator.generate_risk_assessment()
                 elif workflow_type == "contract_review":
-                    graph = generator.generate_contract_review(num_tasks=10)
+                    graph = generator.generate_contract_review()
                 elif workflow_type == "compliance_check":
-                    graph = generator.generate_compliance_check(num_tasks=10)
+                    graph = generator.generate_compliance_check()
                 elif workflow_type == "document_redlining":
-                    graph = generator.generate_document_redlining(num_tasks=10)
+                    graph = generator.generate_document_redlining()
 
                 workflow_id = f"{domain_key}_{workflow_type}"
                 workflows.append((workflow_id, graph))
@@ -715,23 +715,23 @@ def workflows(ctx, domain, count, output_dir):
 
             # Generate workflow
             if workflow_type == "medical_record_extraction":
-                graph = generator.generate_medical_record_extraction(num_tasks=10)
+                graph = generator.generate_medical_record_extraction()
             elif workflow_type == "insurance_claim_processing":
-                graph = generator.generate_insurance_claim_processing(num_tasks=10)
+                graph = generator.generate_insurance_claim_processing()
             elif workflow_type == "patient_intake":
-                graph = generator.generate_patient_intake_workflow(num_tasks=10)
+                graph = generator.generate_patient_intake_workflow()
             elif workflow_type == "loan_approval":
-                graph = generator.generate_loan_approval(num_tasks=10)
+                graph = generator.generate_loan_approval()
             elif workflow_type == "fraud_detection":
-                graph = generator.generate_fraud_detection(num_tasks=10)
+                graph = generator.generate_fraud_detection()
             elif workflow_type == "risk_assessment":
-                graph = generator.generate_risk_assessment(num_tasks=10)
+                graph = generator.generate_risk_assessment()
             elif workflow_type == "contract_review":
-                graph = generator.generate_contract_review(num_tasks=10)
+                graph = generator.generate_contract_review()
             elif workflow_type == "compliance_check":
-                graph = generator.generate_compliance_check(num_tasks=10)
+                graph = generator.generate_compliance_check()
             elif workflow_type == "document_redlining":
-                graph = generator.generate_document_redlining(num_tasks=10)
+                graph = generator.generate_document_redlining()
 
             # Create filename
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[

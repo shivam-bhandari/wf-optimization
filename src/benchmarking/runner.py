@@ -352,6 +352,211 @@ class BenchmarkRunner:
 
         return df
 
+    def export_web_results(self, results_df: pd.DataFrame, output_path: str) -> None:
+        """
+        Export benchmark results in a JSON format optimized for the web dashboard.
+        Adds a 'workflows' section with full node/edge data for visualization (vis-network compatible),
+        including a default demo workflow for immediate access/demo.
+        """
+        import numpy as np
+        from datetime import datetime
+        import json
+        df = results_df.copy()
+        # Avoid NaN issues for downstream
+        df = df.replace({np.nan: None})
+
+        # Metadata
+        generated_at = datetime.now().isoformat(timespec="seconds")
+        total_benchmarks = len(df)
+        domains = sorted(df["workflow_id"].apply(lambda x: x.split("_")[0] if isinstance(x, str) and "_" in x else "other").unique())
+        workflows = df["workflow_id"].nunique()
+        algorithms_tested = sorted(df["algorithm_name"].unique())
+        success_rate = round(df["success"].mean() * 100 if not df.empty else 0, 2)
+
+        # Main algorithms stats
+        algo_stats = []
+        for algo in algorithms_tested:
+            subset = df[df["algorithm_name"] == algo]
+            display_name = (
+                algo.replace("_optimizer", "").replace("dag_dynamic_programming", "DAG-DP").replace("bellman_ford_optimizer","Bellman-Ford").replace("astar", "A*").replace("dijkstra","Dijkstra").replace("_", " ").title().replace("A* ", "A*")
+            )
+            avg_execution_time = round(subset["execution_time_seconds"].mean() or 0, 4)
+            avg_cost = round(subset["total_cost"].mean() or 0, 2)
+            avg_nodes_explored = round(subset["nodes_explored"].mean() or 0, 2)
+            success = round(subset["success"].mean() * 100 if len(subset) else 0, 2)
+            total_runs = subset.shape[0]
+            std_execution_time = round(subset["execution_time_seconds"].std() or 0, 5)
+            d = dict(
+                name=algo,
+                display_name=display_name,
+                avg_execution_time=avg_execution_time,
+                avg_cost=avg_cost,
+                avg_nodes_explored=avg_nodes_explored,
+                success_rate=success,
+                total_runs=total_runs,
+                std_execution_time=std_execution_time
+            )
+            algo_stats.append(d)
+
+        # Best algorithm (lowest avg_execution_time)
+        best_algo = min(algo_stats, key=lambda x: (x["avg_execution_time"] if x["avg_execution_time"] is not None else float("inf")), default=None)
+        all_optimal = all(a["avg_cost"] == algo_stats[0]["avg_cost"] for a in algo_stats) if algo_stats else True
+        best_algorithm = best_algo["name"] if best_algo else None
+        best_avg_time = best_algo["avg_execution_time"] if best_algo else None
+
+        recommendation = f"Use {best_algo['display_name']} for production ({round(algo_stats[0]['avg_execution_time']/best_avg_time,1) if best_algo and best_avg_time else ''}× faster than alternatives)" if best_algo else "Review benchmark results for more information."
+
+        # Group by workflow
+        results_by_workflow = []
+        workflows_group = df.groupby("workflow_id")
+        for wf_id, wf_df in workflows_group:
+            domain = wf_id.split("_")[0] if "_" in wf_id else "other"
+            workflow_type = wf_id.split("_",1)[1] if "_" in wf_id else wf_id
+            nodes = int(wf_df["nodes_explored"].mean() or 0) if "nodes_explored" in wf_df.columns else None
+            results = []
+            for algo in algorithms_tested:
+                a_df = wf_df[wf_df["algorithm_name"] == algo]
+                if not a_df.empty:
+                    results.append(dict(
+                        algorithm=algo,
+                        avg_time=round(a_df["execution_time_seconds"].mean() or 0, 5),
+                        avg_cost=round(a_df["total_cost"].mean() or 0, 2),
+                        trials=int(a_df.shape[0])
+                    ))
+            results_by_workflow.append(dict(
+                workflow_id=wf_id,
+                domain=domain,
+                workflow_type=workflow_type,
+                nodes=nodes,
+                results=results
+            ))
+
+        # Visualizations static metadata
+        visualizations = [
+            dict(filename="algorithm_comparison_time.png", title="Execution Time Comparison", description="Average execution time across all workflows"),
+            dict(filename="algorithm_comparison_cost.png", title="Solution Cost Comparison", description="Total cost of solutions found by each algorithm"),
+            dict(filename="scalability.png", title="Scalability Analysis", description="Performance across different workflow sizes"),
+            dict(filename="cost_comparison.png", title="Cost by Domain", description="Cost comparison across Healthcare, Finance, and Legal domains"),
+        ]
+
+        # ---- WORKFLOWS SECTION ---- #
+        def nx_to_vis(workflow_id, domain, g):
+            """Convert DiGraph to vis-network format for nodes/edges and metadata."""
+            # Node label/attr handling
+            nodes = []
+            for node, data in g.nodes(data=True):
+                label = data.get('label', str(node).replace('_', ' ').title())
+                task_type = data.get('task_type', 'task')
+                exec_time_ms = data.get('execution_time_ms', data.get('exec_time_ms', 0))
+                cost = data.get('cost_units', data.get('cost', 0))
+                resource_req = data.get('resource_requirements', {})
+                is_start = data.get('is_start', node == 'start')
+                is_end = data.get('is_end', node == 'end')
+                nodes.append({
+                    'id': node,
+                    'label': label,
+                    'task_type': task_type,
+                    'execution_time_ms': exec_time_ms,
+                    'cost_units': cost,
+                    'is_start': is_start,
+                    'is_end': is_end,
+                    'resource_requirements': resource_req
+                })
+            edges = []
+            for u, v, data in g.edges(data=True):
+                edges.append({
+                    'from': u,
+                    'to': v,
+                    'transition_cost': data.get('transition_cost', data.get('weight', 0)),
+                    'data_transfer_time_ms': data.get('data_transfer_time_ms', 0),
+                    'label': data.get('label', ''),
+                    'dashed': data.get('conditional', False)
+                })
+            # Compute metadata
+            metadata = {
+                'total_nodes': g.number_of_nodes(),
+                'total_edges': g.number_of_edges(),
+                'estimated_total_cost': float(sum([d.get('cost_units', d.get('cost', 0)) for _, d in g.nodes(data=True)])),
+                'estimated_total_time_ms': float(sum([d.get('execution_time_ms', d.get('exec_time_ms', 0)) for _, d in g.nodes(data=True)])),
+            }
+            wf_type = None
+            if '_' in workflow_id:
+                wf_type = workflow_id.split('_', 1)[1]
+            return {
+                'workflow_id': workflow_id,
+                'domain': domain,
+                'type': wf_type or str(workflow_id),
+                'nodes': nodes,
+                'edges': edges,
+                'metadata': metadata,
+            }
+
+        # Demo workflow (always included first)
+        demo_nodes = [
+            {'id': 'start', 'label': 'Start', 'task_type': 'start', 'execution_time_ms': 0, 'cost_units': 0, 'is_start': True, 'is_end': False, 'resource_requirements': {}},
+            {'id': 'extract', 'label': 'Extract', 'task_type': 'extract', 'execution_time_ms': 500, 'cost_units': 0.12, 'is_start': False, 'is_end': False, 'resource_requirements': {'cpu_cores': 2}},
+            {'id': 'validate', 'label': 'Validate', 'task_type': 'validate', 'execution_time_ms': 700, 'cost_units': 0.21, 'is_start': False, 'is_end': False, 'resource_requirements': {'cpu_cores': 2, 'memory_gb': 2}},
+            {'id': 'map', 'label': 'Map', 'task_type': 'transform', 'execution_time_ms': 900, 'cost_units': 0.35, 'is_start': False, 'is_end': False, 'resource_requirements': {'cpu_cores': 1, 'memory_gb': 1}},
+            {'id': 'upload', 'label': 'Upload', 'task_type': 'output', 'execution_time_ms': 600, 'cost_units': 0.16, 'is_start': False, 'is_end': False, 'resource_requirements': {'cpu_cores': 1}},
+            {'id': 'end', 'label': 'End', 'task_type': 'end', 'execution_time_ms': 0, 'cost_units': 0, 'is_start': False, 'is_end': True, 'resource_requirements': {}},
+        ]
+        demo_edges = [
+            {'from': 'start', 'to': 'extract', 'transition_cost': 0.05, 'data_transfer_time_ms': 50, 'label': '', 'dashed': False},
+            {'from': 'extract', 'to': 'validate', 'transition_cost': 0.07, 'data_transfer_time_ms': 100, 'label': '', 'dashed': False},
+            {'from': 'validate', 'to': 'map', 'transition_cost': 0.1, 'data_transfer_time_ms': 70, 'label': '', 'dashed': True},
+            {'from': 'map', 'to': 'upload', 'transition_cost': 0.13, 'data_transfer_time_ms': 120, 'label': '', 'dashed': False},
+            {'from': 'upload', 'to': 'end', 'transition_cost': 0.08, 'data_transfer_time_ms': 30, 'label': '', 'dashed': False},
+        ]
+        demo_metadata = {
+            'total_nodes': 6,
+            'total_edges': 5,
+            'estimated_total_cost': sum(n['cost_units'] for n in demo_nodes),
+            'estimated_total_time_ms': sum(n['execution_time_ms'] for n in demo_nodes),
+        }
+        workflows_out = [
+            {
+                'workflow_id': 'demo_etl_sample',
+                'domain': 'demo',
+                'type': 'extract_transform_load',
+                'nodes': demo_nodes,
+                'edges': demo_edges,
+                'metadata': demo_metadata,
+            }
+        ]
+
+        # Iterate through all actual workflows from self.workflows and add to workflows_out
+        if hasattr(self, 'workflows'):
+            for workflow_id, workflow_graph in self.workflows:
+                # Try to guess domain from ID
+                domain = str(workflow_id).split('_')[0] if '_' in str(workflow_id) else 'other'
+                workflows_out.append(nx_to_vis(str(workflow_id), domain, workflow_graph))
+
+        # Compose final dict
+        web_result = {
+            "metadata": {
+                "generated_at": generated_at,
+                "total_benchmarks": total_benchmarks,
+                "success_rate": success_rate,
+                "algorithms_tested": algorithms_tested,
+                "workflows_tested": workflows,
+                "domains": domains,
+            },
+            "summary": {
+                "best_algorithm": best_algorithm,
+                "best_avg_time": best_avg_time,
+                "all_optimal": all_optimal,
+                "recommendation": recommendation,
+            },
+            "algorithms": algo_stats,
+            "results_by_workflow": results_by_workflow,
+            "visualizations": visualizations,
+            "workflows": workflows_out
+        }
+        # Save as pretty JSON
+        with open(output_path, 'w') as f:
+            json.dump(web_result, f, indent=2, default=str)
+        logger.info(f"Exported web dashboard results to: {output_path}")
+
     def _execute_with_timeout(
         self,
         algorithm: OptimizationAlgorithm,
@@ -664,6 +869,10 @@ class BenchmarkRunner:
 
             agg_df.to_json(agg_json_path, orient="records", indent=2)
             logger.info(f"Saved aggregate statistics to: {agg_json_path.name}")
+
+        # Also export web results
+        web_output_path = str(self.config.results_dir / "web_results.json")
+        self.export_web_results(results_df, web_output_path)
 
 
 def _run_algorithm_subprocess(

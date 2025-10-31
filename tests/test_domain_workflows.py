@@ -37,8 +37,8 @@ class TestHealthcareWorkflowGenerator:
         gen1 = HealthcareWorkflowGenerator(seed=123)
         gen2 = HealthcareWorkflowGenerator(seed=123)
         
-        wf1 = gen1.generate_medical_record_extraction(10)
-        wf2 = gen2.generate_medical_record_extraction(10)
+        wf1 = gen1.generate_medical_record_extraction()
+        wf2 = gen2.generate_medical_record_extraction()
         
         assert wf1.number_of_nodes() == wf2.number_of_nodes()
         assert wf1.number_of_edges() == wf2.number_of_edges()
@@ -47,7 +47,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_generate_medical_record_extraction(self, healthcare_gen):
         """Test medical record extraction workflow generation."""
-        workflow = healthcare_gen.generate_medical_record_extraction(10)
+        workflow = healthcare_gen.generate_medical_record_extraction()
         
         assert isinstance(workflow, nx.DiGraph)
         assert nx.is_directed_acyclic_graph(workflow)
@@ -57,7 +57,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_medical_record_workflow_metadata(self, healthcare_gen):
         """Test medical record workflow has correct metadata."""
-        workflow = healthcare_gen.generate_medical_record_extraction(10)
+        workflow = healthcare_gen.generate_medical_record_extraction()
         
         # Check graph metadata
         assert 'workflow_id' in workflow.graph
@@ -71,7 +71,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_medical_record_workflow_statistics(self, healthcare_gen):
         """Test medical record workflow statistics are computed."""
-        workflow = healthcare_gen.generate_medical_record_extraction(10)
+        workflow = healthcare_gen.generate_medical_record_extraction()
         stats = workflow.graph['statistics']
         
         assert 'total_nodes' in stats
@@ -88,7 +88,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_medical_record_task_nodes(self, healthcare_gen):
         """Test medical record workflow task nodes have required attributes."""
-        workflow = healthcare_gen.generate_medical_record_extraction(10)
+        workflow = healthcare_gen.generate_medical_record_extraction()
         
         # Get a regular task node (not start/end)
         regular_nodes = [n for n in workflow.nodes() if n not in ['start', 'end']]
@@ -120,7 +120,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_medical_record_edges(self, healthcare_gen):
         """Test medical record workflow edges have required attributes."""
-        workflow = healthcare_gen.generate_medical_record_extraction(10)
+        workflow = healthcare_gen.generate_medical_record_extraction()
         
         edges = list(workflow.edges(data=True))
         assert len(edges) > 0
@@ -144,7 +144,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_generate_insurance_claim_processing(self, healthcare_gen):
         """Test insurance claim processing workflow generation."""
-        workflow = healthcare_gen.generate_insurance_claim_processing(11)
+        workflow = healthcare_gen.generate_insurance_claim_processing()
         
         assert isinstance(workflow, nx.DiGraph)
         assert nx.is_directed_acyclic_graph(workflow)
@@ -153,7 +153,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_insurance_claim_workflow_path(self, healthcare_gen):
         """Test insurance claim workflow has valid path from start to end."""
-        workflow = healthcare_gen.generate_insurance_claim_processing(11)
+        workflow = healthcare_gen.generate_insurance_claim_processing()
         
         assert nx.has_path(workflow, 'start', 'end')
         path = nx.shortest_path(workflow, 'start', 'end')
@@ -163,7 +163,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_generate_patient_intake_workflow(self, healthcare_gen):
         """Test patient intake workflow generation."""
-        workflow = healthcare_gen.generate_patient_intake_workflow(8)
+        workflow = healthcare_gen.generate_patient_intake_workflow()
         
         assert isinstance(workflow, nx.DiGraph)
         assert nx.is_directed_acyclic_graph(workflow)
@@ -172,7 +172,7 @@ class TestHealthcareWorkflowGenerator:
     
     def test_patient_intake_is_linear(self, healthcare_gen):
         """Test patient intake workflow is linear (no branches)."""
-        workflow = healthcare_gen.generate_patient_intake_workflow(8)
+        workflow = healthcare_gen.generate_patient_intake_workflow()
         
         # In a linear workflow, all nodes except end have out_degree=1
         # and all nodes except start have in_degree=1
@@ -211,8 +211,8 @@ class TestFinancialWorkflowGenerator:
         gen1 = FinancialWorkflowGenerator(seed=456)
         gen2 = FinancialWorkflowGenerator(seed=456)
         
-        wf1 = gen1.generate_loan_approval(14)
-        wf2 = gen2.generate_loan_approval(14)
+        wf1 = gen1.generate_loan_approval()
+        wf2 = gen2.generate_loan_approval()
         
         assert wf1.number_of_nodes() == wf2.number_of_nodes()
         assert wf1.number_of_edges() == wf2.number_of_edges()
@@ -221,7 +221,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_generate_loan_approval(self, finance_gen):
         """Test loan approval workflow generation."""
-        workflow = finance_gen.generate_loan_approval(14)
+        workflow = finance_gen.generate_loan_approval()
         
         assert isinstance(workflow, nx.DiGraph)
         assert nx.is_directed_acyclic_graph(workflow)
@@ -231,7 +231,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_loan_approval_workflow_metadata(self, finance_gen):
         """Test loan approval workflow has correct metadata."""
-        workflow = finance_gen.generate_loan_approval(14)
+        workflow = finance_gen.generate_loan_approval()
         
         assert 'workflow_id' in workflow.graph
         assert 'domain' in workflow.graph
@@ -245,7 +245,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_loan_approval_has_key_tasks(self, finance_gen):
         """Test loan approval workflow contains expected key tasks."""
-        workflow = finance_gen.generate_loan_approval(14)
+        workflow = finance_gen.generate_loan_approval()
         
         expected_tasks = [
             'application_intake',
@@ -261,7 +261,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_loan_approval_cost_range(self, finance_gen):
         """Test loan approval workflow costs are in expected range."""
-        workflow = finance_gen.generate_loan_approval(14)
+        workflow = finance_gen.generate_loan_approval()
         stats = workflow.graph['statistics']
         
         # Loan approval should cost between $8-30 depending on branches
@@ -273,7 +273,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_generate_fraud_detection(self, finance_gen):
         """Test fraud detection workflow generation."""
-        workflow = finance_gen.generate_fraud_detection(11)
+        workflow = finance_gen.generate_fraud_detection()
         
         assert isinstance(workflow, nx.DiGraph)
         assert nx.is_directed_acyclic_graph(workflow)
@@ -282,7 +282,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_fraud_detection_has_ml_tasks(self, finance_gen):
         """Test fraud detection workflow has ML and analysis tasks."""
-        workflow = finance_gen.generate_fraud_detection(11)
+        workflow = finance_gen.generate_fraud_detection()
         
         ml_tasks = [
             'feature_extraction',
@@ -296,7 +296,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_fraud_detection_is_fast(self, finance_gen):
         """Test fraud detection workflow is relatively fast (real-time)."""
-        workflow = finance_gen.generate_fraud_detection(11)
+        workflow = finance_gen.generate_fraud_detection()
         stats = workflow.graph['statistics']
         
         # Fraud detection (without analyst review) should be < 20 seconds
@@ -307,7 +307,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_generate_risk_assessment(self, finance_gen):
         """Test risk assessment workflow generation."""
-        workflow = finance_gen.generate_risk_assessment(12)
+        workflow = finance_gen.generate_risk_assessment()
         
         assert isinstance(workflow, nx.DiGraph)
         assert nx.is_directed_acyclic_graph(workflow)
@@ -316,7 +316,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_risk_assessment_has_analysis_tasks(self, finance_gen):
         """Test risk assessment workflow has key analytical tasks."""
-        workflow = finance_gen.generate_risk_assessment(12)
+        workflow = finance_gen.generate_risk_assessment()
         
         analysis_tasks = [
             'var_calculation',
@@ -331,7 +331,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_risk_assessment_is_compute_intensive(self, finance_gen):
         """Test risk assessment workflow is compute-intensive."""
-        workflow = finance_gen.generate_risk_assessment(12)
+        workflow = finance_gen.generate_risk_assessment()
         
         # Check that some tasks use high memory
         high_memory_tasks = []
@@ -345,7 +345,7 @@ class TestFinancialWorkflowGenerator:
     
     def test_risk_assessment_is_linear(self, finance_gen):
         """Test risk assessment workflow is linear (no branches)."""
-        workflow = finance_gen.generate_risk_assessment(12)
+        workflow = finance_gen.generate_risk_assessment()
         
         # Should be exactly 14 nodes and 13 edges (linear chain)
         assert workflow.number_of_nodes() == 14
@@ -382,7 +382,7 @@ class TestWorkflowIntegration:
     def test_financial_workflow_with_dijkstra(self):
         """Test financial workflow can be optimized with Dijkstra."""
         gen = FinancialWorkflowGenerator(seed=42)
-        workflow = gen.generate_loan_approval(14)
+        workflow = gen.generate_loan_approval()
         
         # Create edge-weighted graph
         G = nx.DiGraph()
@@ -406,9 +406,9 @@ class TestWorkflowIntegration:
             health_gen.generate_medical_record_extraction(10),
             health_gen.generate_insurance_claim_processing(11),
             health_gen.generate_patient_intake_workflow(8),
-            finance_gen.generate_loan_approval(14),
-            finance_gen.generate_fraud_detection(11),
-            finance_gen.generate_risk_assessment(12),
+            finance_gen.generate_loan_approval(),
+            finance_gen.generate_fraud_detection(),
+            finance_gen.generate_risk_assessment(),
         ]
         
         for workflow in workflows:
@@ -424,9 +424,9 @@ class TestWorkflowIntegration:
             health_gen.generate_medical_record_extraction(10),
             health_gen.generate_insurance_claim_processing(11),
             health_gen.generate_patient_intake_workflow(8),
-            finance_gen.generate_loan_approval(14),
-            finance_gen.generate_fraud_detection(11),
-            finance_gen.generate_risk_assessment(12),
+            finance_gen.generate_loan_approval(),
+            finance_gen.generate_fraud_detection(),
+            finance_gen.generate_risk_assessment(),
         ]
         
         for workflow in workflows:
@@ -448,8 +448,8 @@ class TestEdgeCases:
         gen1 = HealthcareWorkflowGenerator(seed=1)
         gen2 = HealthcareWorkflowGenerator(seed=2)
         
-        wf1 = gen1.generate_medical_record_extraction(10)
-        wf2 = gen2.generate_medical_record_extraction(10)
+        wf1 = gen1.generate_medical_record_extraction()
+        wf2 = gen2.generate_medical_record_extraction()
         
         # Structure might be same, but costs should differ
         cost1 = wf1.graph['statistics']['estimated_total_cost']
@@ -462,7 +462,7 @@ class TestEdgeCases:
     def test_workflows_have_positive_costs(self):
         """Test that all task costs are positive."""
         gen = FinancialWorkflowGenerator(seed=42)
-        workflow = gen.generate_loan_approval(14)
+        workflow = gen.generate_loan_approval()
         
         for node in workflow.nodes():
             if node not in ['start', 'end']:
@@ -503,9 +503,9 @@ def test_domain_workflows_summary():
     # Test finance
     finance_gen = FinancialWorkflowGenerator(seed=42)
     finance_workflows = {
-        'Loan Approval': finance_gen.generate_loan_approval(14),
-        'Fraud Detection': finance_gen.generate_fraud_detection(11),
-        'Risk Assessment': finance_gen.generate_risk_assessment(12),
+        'Loan Approval': finance_gen.generate_loan_approval(),
+        'Fraud Detection': finance_gen.generate_fraud_detection(),
+        'Risk Assessment': finance_gen.generate_risk_assessment(),
     }
     
     print(f"\n{'Workflow':<35} {'Nodes':<8} {'Edges':<8} {'Cost':<10} {'Time (s)':<10}")

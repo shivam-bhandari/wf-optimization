@@ -175,7 +175,7 @@ class FinancialWorkflowGenerator:
             else 0,
         }
 
-    def generate_loan_approval(self, num_tasks: int) -> nx.DiGraph:
+    def generate_loan_approval(self) -> nx.DiGraph:
         """
         Generate a loan approval workflow.
 
@@ -219,9 +219,6 @@ class FinancialWorkflowGenerator:
               (30-60 seconds, $10-20) for borderline cases
             - After fraud detection: 5% chance triggers fraud investigation
               (3-5 minutes, $50-100) for suspicious applications
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the loan approval workflow
@@ -407,7 +404,7 @@ class FinancialWorkflowGenerator:
 
         return graph
 
-    def generate_fraud_detection(self, num_tasks: int) -> nx.DiGraph:
+    def generate_fraud_detection(self) -> nx.DiGraph:
         """
         Generate a fraud detection workflow.
 
@@ -446,9 +443,6 @@ class FinancialWorkflowGenerator:
         Conditional Branch:
             - After threshold decision: 15% chance requires analyst review
               (1-3 minutes, $15-40) for borderline or high-value transactions
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the fraud detection workflow
@@ -592,7 +586,7 @@ class FinancialWorkflowGenerator:
 
         return graph
 
-    def generate_risk_assessment(self, num_tasks: int) -> nx.DiGraph:
+    def generate_risk_assessment(self) -> nx.DiGraph:
         """
         Generate a risk assessment workflow.
 
@@ -633,9 +627,6 @@ class FinancialWorkflowGenerator:
         No Conditional Branches:
             This is a deterministic analytical workflow that always executes
             all steps. Risk assessment is comprehensive by design.
-
-        Args:
-            num_tasks: Unused parameter (kept for interface compatibility)
 
         Returns:
             NetworkX DiGraph representing the risk assessment workflow
