@@ -33,7 +33,7 @@ env/
 ENV/
 
 # Poetry
-poetry.lock
+# poetry.lock - Keep this file for reproducible builds
 poetry.toml
 
 # PyCharm
