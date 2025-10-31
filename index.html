@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflow Optimization Benchmark Suite</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1>Workflow Optimization Benchmark Suite</h1>
+      <p class="subtitle">Compare graph algorithms for optimizing business workflows across healthcare, finance, and legal domains</p>
+    </header>
+
+    <section id="overview">
+      <h2>About This Project</h2>
+      <p>This benchmark suite evaluates different graph algorithms—<strong>A*</strong>, <strong>Dijkstra</strong>, <strong>Bellman-Ford</strong>, and <strong>DAG Dynamic Programming</strong>—for finding optimal paths through complex business workflows. Each workflow represents real-world processes with tasks, transitions, costs, and execution times.</p>
+    </section>
+
+    <section id="reports">
+      <h2>Benchmark Reports</h2>
+      <p class="section-description">Algorithm performance across all tested workflows. Lower execution time and cost indicate better optimization.</p>
+      <div class="results-table-container">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Avg Time</th>
+              <th>Avg Cost</th>
+              <th>Success Rate</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="analysis">
+      <h2>Algorithm Analysis</h2>
+      <p class="section-description">Key insights and recommendations based on benchmark results across different workflow types and sizes.</p>
+      
+      <div class="analysis-grid">
+        <div class="analysis-card winner-card">
+          <div class="analysis-header">
+            <span class="trophy-icon">🏆</span>
+            <h3>Best Overall</h3>
+          </div>
+          <div class="analysis-content" id="best-algorithm">
+            <div class="algo-name">-</div>
+            <div class="algo-stats">
+              <span class="stat-item"><strong>Avg Time:</strong> <span id="best-time">-</span></span>
+              <span class="stat-item"><strong>Avg Cost:</strong> <span id="best-cost">-</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="analysis-card">
+          <h3>Performance by Domain</h3>
+          <div class="domain-performance" id="domain-performance">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="analysis-card">
+          <h3>Key Findings</h3>
+          <ul class="findings-list" id="key-findings">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+
+        <div class="analysis-card recommendation-card">
+          <h3>Recommendation</h3>
+          <div class="recommendation-content" id="recommendation">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow-viz">
+      <h2>Workflow Visualization</h2>
+      <p class="section-description">Explore interactive visualizations of workflows from different business domains. Each node represents a task, and edges show transitions with associated costs.</p>
+      <div class="workflow-selector-container">
+        <label for="workflow-selector">Select Workflow</label>
+        <select id="workflow-selector"></select>
+      </div>
+      <div class="workflow-visualization-container">
+        <div class="workflow-graph-card">
+          <div id="workflow-graph"></div>
+          <div id="workflow-graph-loading" class="spinner" style="display:none"><div></div></div>
+        </div>
+        <aside id="workflow-info-panel"></aside>
+        <div class="workflow-controls">
+          <button type="button" id="reset-graph-btn">Reset View</button>
+          <button type="button" id="export-png-btn">Export PNG</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="conclusion">
+      <h2>Conclusion</h2>
+      <div class="conclusion-content">
+        <div class="conclusion-summary">
+          <h3>Summary of Findings</h3>
+          <div id="conclusion-summary-text">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="conclusion-grid">
+          <div class="conclusion-card">
+            <h3>Algorithm Performance</h3>
+            <div id="conclusion-performance">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="conclusion-card">
+            <h3>Key Takeaways</h3>
+            <div id="conclusion-takeaways">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="conclusion-footer">
+          <p><strong>About This Benchmark:</strong> All tests were conducted on workflow graphs representing real-world business processes across healthcare, finance, and legal domains. Results demonstrate the practical performance characteristics of each algorithm under typical operating conditions.</p>
+          <div class="conclusion-meta" id="conclusion-meta">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

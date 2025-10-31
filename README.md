@@ -13,9 +13,60 @@ A comprehensive benchmark suite for evaluating workflow optimization algorithms.
 ---
 
 ## Deployment
-- For full, step-by-step deployment, see [DEPLOYMENT.md](DEPLOYMENT.md)
-- **Automatic deployments**: Any push to main triggers a GitHub Actions workflow to re-run benchmarks, prepare artifacts, and update GitHub Pages.
-- Manual and advanced options also documented.
+
+### Quick Deployment
+
+```bash
+# Run the interactive deployment helper
+./deploy.sh
+```
+
+Choose from:
+- 🌐 **Local Network** - Share on same WiFi/LAN
+- 🔗 **ngrok** - Share with anyone via tunnel
+- 📄 **GitHub Pages** - Free public hosting
+- ☁️ **Netlify** - Quick cloud deployment
+- 📦 **Docker** - Containerized deployment
+
+### Detailed Deployment Guide
+
+For comprehensive deployment instructions, see **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)**
+
+The guide includes:
+- Step-by-step instructions for all deployment methods
+- Cloud platform deployments (AWS, GCP, Azure)
+- Docker containerization
+- Troubleshooting tips
+- Security considerations
+
+### Quick Start Options
+
+**Option 1: Local Network Sharing**
+```bash
+# Generate results and start server
+./run_and_serve.sh
+
+# Share URL with people on your network
+# http://YOUR_IP_ADDRESS:8000
+```
+
+**Option 2: ngrok (Share with Anyone)**
+```bash
+# Start server
+cd web && python serve.py --port 8000 &
+
+# Create tunnel
+ngrok http 8000
+
+# Share the ngrok URL (e.g., https://abc123.ngrok.io)
+```
+
+**Option 3: GitHub Pages**
+```bash
+# Deploy to GitHub Pages
+./deploy.sh
+# Select option 3, then follow prompts
+```
 
 ---
 
@@ -40,11 +91,39 @@ poetry install
 
 ## Quick Start
 
-Run the complete end-to-end demo:
+### 🚀 One-Command Pipeline (Recommended)
+
+Run the complete pipeline and view results in your browser:
+
+```bash
+./run_and_serve.sh
+```
+
+This single command will:
+1. ✅ Generate 3 sample workflows (healthcare, finance, legal)
+2. ✅ Run 4 algorithms (DAG-DP, Dijkstra, A*, Bellman-Ford) with 2 trials each
+3. ✅ Create 4 visualization charts
+4. ✅ Generate a comprehensive markdown report
+5. ✅ Start web server and open dashboard in your browser
+
+**Press `Ctrl+C` to stop the server when done.**
+
+### 📊 View Existing Results
+
+If you already have benchmark results and just want to view them:
+
+```bash
+./serve_only.sh
+```
+
+### 🔧 Manual Step-by-Step
+
+Run the complete end-to-end demo manually:
 
 ```bash
 poetry run python main.py
-
+bash scripts/prepare_web_data.sh
+python web/serve.py
 ```
 
 This will:
@@ -129,3 +208,69 @@ poetry run python -m src.cli report --results-file results/benchmark_results_202
 ```bash
 poetry run pytest
 ```
+
+---
+
+## Troubleshooting
+
+### Server Won't Start / Port Already in Use
+
+If you see "Port 8000 is already in use":
+
+**Option 1: Use a different port**
+```bash
+python web/serve.py --port 8080
+```
+
+**Option 2: Find and kill the process using port 8000**
+```bash
+# macOS/Linux
+lsof -ti:8000 | xargs kill -9
+
+# Or find the process first
+lsof -i:8000
+```
+
+**Option 3: The server automatically finds a free port**
+The `serve.py` script will automatically try ports 8000-8009 if 8000 is busy.
+
+### Browser Doesn't Open Automatically
+
+If the browser doesn't open automatically, manually visit:
+- **http://localhost:8000** (or the port shown in the terminal)
+
+### Dashboard Shows "No Data" or Empty Results
+
+1. Make sure benchmarks ran successfully:
+   ```bash
+   ls -la results/*/web_results.json
+   ```
+
+2. Prepare web data:
+   ```bash
+   bash scripts/prepare_web_data.sh
+   ```
+
+3. Check if `web/data/web_results.json` exists:
+   ```bash
+   ls -la web/data/web_results.json
+   ```
+
+### Server Connection Refused
+
+If you see "Connection refused" when accessing the dashboard:
+
+1. Check if the server is actually running:
+   ```bash
+   ps aux | grep "python.*serve.py"
+   ```
+
+2. Try accessing from a different browser or incognito mode
+
+3. Check firewall settings (macOS may block Python servers)
+
+4. Verify the server is binding to the correct interface:
+   ```bash
+   # Server should show: "Serving web dashboard at http://localhost:XXXX"
+   python web/serve.py
+   ```

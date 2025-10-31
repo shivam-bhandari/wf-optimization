@@ -101,17 +101,14 @@ class DAGDynamicProgramming(OptimizationAlgorithm):
         if target not in workflow_graph.nodes():
             raise ValueError(f"Target node '{target}' not found in graph")
 
-        # Validate that the graph is a DAG
-        if not nx.is_directed_acyclic_graph(workflow_graph):
-            raise ValueError(
-                "Graph contains cycles; DAG shortest path requires an acyclic graph"
-            )
-
-        # Perform topological sort
+        # Perform topological sort (will raise NetworkXError if graph has cycles)
+        # This eliminates redundant cycle checking via is_directed_acyclic_graph()
         try:
             topo_order = list(nx.topological_sort(workflow_graph))
         except nx.NetworkXError as e:
-            raise ValueError(f"Failed to perform topological sort: {e}")
+            raise ValueError(
+                f"Graph contains cycles; DAG shortest path requires an acyclic graph: {e}"
+            )
 
         # Initialize distances dictionary: all nodes to infinity except source
         distances: Dict[Any, float] = {
@@ -191,24 +188,16 @@ class DAGDynamicProgramming(OptimizationAlgorithm):
         Time Complexity: O(1)
         Space Complexity: O(1)
         """
-        # Get edge weight, default to 1.0 if not present
+        # Optimized: Get edge data once and check weight attributes efficiently
         edge_data = graph.get_edge_data(u, v)
-
-        # Try to get weight from specified attribute, fallback to alternatives
-        weight = None
+        
+        # Fast path: try primary weight attribute first
         if edge_data:
-            # Try primary weight attribute
             weight = edge_data.get(self.weight_attr)
-
-            # Fallback to other common weight attributes if primary not found
             if weight is None:
-                for attr in ["weight", "cost", "time"]:
-                    if attr in edge_data:
-                        weight = edge_data[attr]
-                        break
-
-        # Default weight if none found
-        if weight is None:
+                # Fallback: check common weight attributes
+                weight = edge_data.get("weight") or edge_data.get("cost") or edge_data.get("time") or 1.0
+        else:
             weight = 1.0
 
         # Perform relaxation: if path through u is shorter, update

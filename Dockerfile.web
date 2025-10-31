@@ -1,0 +1,34 @@
+# Dockerfile for web dashboard deployment
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install Poetry
+RUN pip install poetry
+
+# Copy dependency files
+COPY pyproject.toml poetry.lock ./
+
+# Install dependencies (no dev dependencies for smaller image)
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-dev
+
+# Copy web files and scripts
+COPY web/ ./web/
+COPY scripts/ ./scripts/
+
+# Optionally generate results at build time
+# Uncomment the following lines if you want to generate results in the image:
+# COPY main.py ./
+# COPY src/ ./src/
+# RUN poetry run python main.py && bash scripts/prepare_web_data.sh || true
+
+# Set working directory to web
+WORKDIR /app/web
+
+# Expose port
+EXPOSE 8000
+
+# Start web server
+CMD ["python", "serve.py", "--port", "8000"]
+
