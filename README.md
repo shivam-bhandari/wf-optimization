@@ -146,19 +146,3 @@ python web/serve.py
 
 For detailed CLI documentation, see [CLI_GUIDE.md](CLI_GUIDE.md).  
 For visualization documentation, see [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md).
-
-## Running Tests
-
-```bash
-# Run all tests
-poetry run pytest
-
-# Run with coverage
-poetry run pytest --cov=src tests/
-
-# Run specific test file
-poetry run pytest tests/test_algorithms.py
-
-# Run with verbose output
-poetry run pytest -v
-```
