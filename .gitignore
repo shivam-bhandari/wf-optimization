@@ -70,10 +70,7 @@ Thumbs.db
 # Logs
 *.log
 
-results/
-docs/
-scripts/
-DEPLOYMENT.md
-
+# Note: scripts/ directory is needed for deployment
+# scripts/
 
 tests/
