@@ -2,37 +2,9 @@
 
 A comprehensive benchmark suite for evaluating workflow optimization algorithms.
 
----
-
-## 🚀 Live Demo
-- **See it live:** [https://username.github.io/workflow-benchmark](https://username.github.io/workflow-benchmark)
-- Direct link to our interactive dashboard comparing algorithm performance, charts, and expert recommendations.
-- <img src="web/images/dashboard_screenshot.png" alt="Dashboard Screenshot" width="600" height="auto" style="box-shadow:0 2px 12px #2563eb28; margin:1em 0;"/>
-- The dashboard is automatically updated whenever changes are pushed to `main`.
-
----
-
-## Deployment
-- For full, step-by-step deployment, see [DEPLOYMENT.md](DEPLOYMENT.md)
-- **Automatic deployments**: Any push to main triggers a GitHub Actions workflow to re-run benchmarks, prepare artifacts, and update GitHub Pages.
-- Manual and advanced options also documented.
-
----
-
-## Screenshots
-
-| Dashboard          | Charts Gallery                 | Algorithm Compare Tool      |
-|--------------------|-------------------------------|----------------------------|
-| ![dashboard](web/images/dashboard_screenshot.png) | ![charts](web/images/charts_gallery_screenshot.png) | ![compare](web/images/compare_tool_screenshot.png) |
-
-> Replace placeholder PNGs in `web/images/` with sample screenshots of your interface for best effect.
-
----
-
 ## Installation
 
 This project uses [Poetry](https://python-poetry.org/) for dependency management.
-### Install Dependencies
 
 ```bash
 poetry install
@@ -44,7 +16,6 @@ Run the complete end-to-end demo:
 
 ```bash
 poetry run python main.py
-
 ```
 
 This will:
@@ -56,7 +27,7 @@ This will:
 
 ## Usage
 
-### Command-Line Interface (CLI)
+### Command-Line Interface
 
 The benchmark suite includes a comprehensive CLI for running benchmarks, analyzing results, and generating workflows.
 
@@ -64,68 +35,130 @@ The benchmark suite includes a comprehensive CLI for running benchmarks, analyzi
 
 ```bash
 # Run all benchmarks
-poetry run python -m src.cli run
+poetry run benchmark run
 
 # Run specific algorithms on specific domain
-poetry run python -m src.cli run --algorithms dijkstra,astar --domains healthcare --trials 5
+poetry run benchmark run --algorithms dijkstra,astar --domains healthcare --trials 5
 
 # Analyze results
-poetry run python -m src.cli analyze --results-file results/benchmark_results_20251029_153133.csv
+poetry run benchmark analyze --results-file results/benchmark_results_20251031_112112.csv
+
+# Generate visualizations
+poetry run benchmark visualize --results-file results/benchmark_results_20251031_112112.csv
+
+# Generate report
+poetry run benchmark report --results-file results/benchmark_results_20251031_112112.csv
 
 # Generate sample workflows
-poetry run python -m src.cli workflows --domain healthcare --count 3
+poetry run benchmark workflows --domain healthcare --count 3
 ```
 
 #### Available Commands
+
+**Note**: All CLI commands use the format `poetry run benchmark [COMMAND]` or `poetry run python -m src.cli benchmark [COMMAND]`
 
 - **`run`** - Execute benchmarks across algorithms and domains
   - Options: `--algorithms`, `--domains`, `--trials`, `--timeout`, `--output-dir`
   - Algorithms: `dag_dp`, `dijkstra`, `astar`, `bellman_ford`
   - Domains: `healthcare`, `finance`, `legal`
+  - Example: `poetry run benchmark run --algorithms dijkstra,astar --trials 5`
 
 - **`analyze`** - Analyze benchmark results from CSV files
   - Options: `--results-file` (required)
   - Provides summary statistics, best algorithms, and recommendations
+  - Example: `poetry run benchmark analyze --results-file results/benchmark_results_20251031_112112.csv`
 
 - **`visualize`** - Generate visualizations from benchmark results
-  - Options: `--results-file` (required), `--output-dir`
-  - Creates 5 high-resolution plots: time comparison, cost comparison, scalability, etc.
+  - Options: `--results-file` (required), `--output-dir` (default: `results/visualizations/`)
+  - Creates 5 high-resolution PNG plots (300 DPI):
+    1. `algorithm_comparison_time.png` - Execution time by algorithm
+    2. `algorithm_comparison_cost.png` - Solution cost by algorithm
+    3. `algorithm_comparison_nodes.png` - Path length by algorithm
+    4. `scalability.png` - How algorithms scale with workflow size
+    5. `cost_comparison.png` - Cost comparison across workflows
+  - Example: `poetry run benchmark visualize --results-file results/benchmark_results_20251031_112112.csv --output-dir plots/`
 
 - **`report`** - Generate comprehensive markdown report
-  - Options: `--results-file` (required), `--output-dir`
-  - Creates detailed report with analysis, recommendations, and embedded visualizations
+  - Options: `--results-file` (required), `--output-dir` (default: `results/`)
+  - Creates detailed report with:
+    - Executive summary with key findings
+    - Test setup and configuration
+    - Performance results table
+    - Detailed algorithm analysis
+    - Production recommendations
+    - Embedded visualizations (if available)
+  - Output: `benchmark_report_{timestamp}.md`
+  - Example: `poetry run benchmark report --results-file results/benchmark_results_20251031_112112.csv`
 
 - **`workflows`** - Generate sample workflows
-  - Options: `--domain` (required), `--count`, `--output-dir`
+  - Options: `--domain` (required), `--count`, `--output-dir` (default: `workflows/`)
   - Generates realistic workflows as JSON files
+  - Example: `poetry run benchmark workflows --domain healthcare --count 3`
 
-For detailed CLI documentation, see [CLI_GUIDE.md](CLI_GUIDE.md).
-For visualization documentation, see [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md).
+### Helper Scripts
 
-#### Examples
+- **`scripts/prepare_web_data.sh`** - Prepare web dashboard data
+  - Copies latest benchmark results and visualizations to `web/data/` and `web/images/`
+  - Updates `last_updated.json` timestamp
+  - Usage: `bash scripts/prepare_web_data.sh`
+  - Note: Run after generating benchmark results to update the web dashboard
+
+- **`web/serve.py`** - Start local web server for dashboard
+  - Serves web dashboard at `http://localhost:8000`
+  - Automatically opens browser
+  - Usage: `python web/serve.py`
+  - Options:
+    - `--port PORT` - Specify port (default: 8000)
+    - `--no-open` - Don't open browser automatically
+
+### Example Scripts
+
+The `examples/` directory contains demonstration scripts:
+
+- `examples/benchmark_runner_demo.py` - Benchmark runner usage example
+- `examples/healthcare_workflow_demo.py` - Healthcare workflow generation example
+- `examples/report_demo.py` - Report generation example
+- `examples/visualization_demo.py` - Visualization creation example
+
+Run examples with: `poetry run python examples/[script_name].py`
+
+### Complete Workflow Example
 
 ```bash
-# Run comprehensive benchmark
-poetry run python -m src.cli run --trials 10 --timeout 600
+# 1. Run benchmarks
+poetry run benchmark run --trials 5
 
-# Compare DAG-DP and Dijkstra on healthcare workflows
-poetry run python -m src.cli run --algorithms dag_dp,dijkstra --domains healthcare
+# 2. Analyze results
+poetry run benchmark analyze --results-file results/benchmark_results_*.csv
 
-# Generate workflows for testing
-poetry run python -m src.cli workflows --domain finance --count 5
+# 3. Generate visualizations
+poetry run benchmark visualize --results-file results/benchmark_results_*.csv
 
-# Analyze with verbose output
-poetry run python -m src.cli --verbose analyze --results-file results/latest.csv
+# 4. Generate report
+poetry run benchmark report --results-file results/benchmark_results_*.csv
 
-# Generate visualizations
-poetry run python -m src.cli visualize --results-file results/benchmark_results_20251029_153133.csv
+# 5. Prepare web dashboard
+bash scripts/prepare_web_data.sh
 
-# Generate comprehensive report
-poetry run python -m src.cli report --results-file results/benchmark_results_20251029_153133.csv
+# 6. View dashboard
+python web/serve.py
 ```
 
-### Running Tests
+For detailed CLI documentation, see [CLI_GUIDE.md](CLI_GUIDE.md).  
+For visualization documentation, see [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md).
+
+## Running Tests
 
 ```bash
+# Run all tests
 poetry run pytest
+
+# Run with coverage
+poetry run pytest --cov=src tests/
+
+# Run specific test file
+poetry run pytest tests/test_algorithms.py
+
+# Run with verbose output
+poetry run pytest -v
 ```
